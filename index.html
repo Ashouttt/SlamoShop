@@ -14,7 +14,7 @@
   header{
     width:100%;
     padding:10px 20px;
-    background: rgba(31,122,236,0.9); /* niebieski pasek z lekką przezroczystością */
+    background: rgba(31,122,236,1); /* niebieski pasek z lekką przezroczystością */
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -26,7 +26,7 @@
 
   .auth-buttons button{
     padding:6px 12px;
-    background: rgba(255,255,255,0.9); /* białe przyciski z lekką przezroczystością */
+    background: rgba(255,255,255,1); /* białe przyciski z lekką przezroczystością */
     color:#1f7aec;
     border:none;
     border-radius:6px;
@@ -34,7 +34,7 @@
     margin-right:5px;
     transition:background 0.3s;
   }
-  .auth-buttons button:hover{background: rgba(224,224,224,0.9);}
+  .auth-buttons button:hover{background: rgba(224,224,224,1);}
 
   .cart-icon{
     font-size:1.5rem;
@@ -60,11 +60,14 @@
   .container{
     max-width:900px;
     margin:100px auto 20px auto;
-    background: rgba(255,255,255,0.9); /* przezroczyste białe tło kontenera z produktami */
+    background: rgba(0,0,0,0.5); /* przezroczyste białe tło kontenera z produktami */
+    color: white;
     padding:20px;
     border-radius:10px;
     box-shadow:0 6px 20px rgba(20,20,40,0.06);
-    display:none;
+    display: none !important;
+    position: relative;
+    z-index: 1000;
   }
 
   .products{
@@ -79,7 +82,8 @@
     padding:12px;
     border-radius:8px;
     transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
-    background: rgba(255,255,255,0.9); /* lekko przezroczyste karty */
+    background: rgba(0,0,0,0.5); /* lekko przezroczyste karty */
+    color: white;
   }
   .card:hover{
     transform:translateY(-5px);
@@ -105,6 +109,7 @@
     margin-bottom:12px;
     border:1px solid #d7dbe1;
     border-radius:6px;
+    background: white;
   }
 
   .currency-selector{
@@ -113,10 +118,12 @@
     right:10px;
     max-width:200px;
     z-index:1000;
-    background: rgba(255,255,255,0.9); /* przezroczysty selector walut */
+    background: rgba(0,0,0,0.5); /* przezroczysty selector walut */
+    color: white;
     padding:6px;
     border-radius:8px;
     box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    position: relative;
   }
 
   .auth-form{
@@ -124,14 +131,14 @@
     margin:120px auto;
     padding:20px;
     background: rgba(255,255,255,0.9); /* przezroczysty formularz logowania */
+    color: black;
     border-radius:10px;
     box-shadow:0 6px 20px rgba(20,20,40,0.06);
-  }
   .auth-form h2{text-align:center;margin-bottom:20px;}
-  .small{font-size:0.9rem;color:#555;}
+  .small{font-size:0.9rem;color:#aaa;}
 
   .cart{
-    background: rgba(240,248,255,0.9); /* przezroczysty koszyk */
+    background: rgba(240,248,255,1); /* przezroczysty koszyk */
     padding:12px;
     border-radius:8px;
     margin-top:20px;
