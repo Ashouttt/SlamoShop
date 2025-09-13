@@ -5,142 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SlamoShop — Demo</title>
 <style>
-  body{
-    font-family:Inter,system-ui,Segoe UI,Arial;
-    margin:0;
-    padding:0;
-    background:#f6f8fa;
-    color:#111;
-  }
-
-  header{
-    width:100%;
-    padding:10px 20px;
-    background:#1f7aec;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:fixed;
-    top:0; left:0;
-    z-index:1000;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  .auth-buttons button{
-    padding:6px 12px;
-    background:#fff;
-    color:#1f7aec;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    margin-right:5px;
-    transition:background 0.3s;
-  }
+  body{font-family:Inter,system-ui,Segoe UI,Arial;margin:0;padding:0;background:#f6f8fa;color:#111;}
+  header{width:100%;padding:10px 20px;background:#1f7aec;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+  .auth-buttons button{padding:6px 12px;background:#fff;color:#1f7aec;border:none;border-radius:6px;cursor:pointer;margin-right:5px;transition:background 0.3s;}
   .auth-buttons button:hover{background:#e0e0e0;}
-
-  header .cart-icon{
-    font-size:1.5rem;
-    color:#fff;
-    cursor:pointer;
-    position:relative;
-    margin-left:40px;
-    margin-right:20px;
-    transition:all 0.3s;
-  }
-  header .cart-icon:hover{color:#ffd700;}
-  header .cart-icon span{
-    position:absolute;
-    top:-6px;
-    right:-6px;
-    background:red;
-    color:#fff;
-    font-size:0.8rem;
-    padding:2px 6px;
-    border-radius:50%;
-  }
-
-  .container{
-    max-width:900px;
-    margin:100px auto 20px auto;
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 6px 20px rgba(20,20,40,0.06);
-    display:none;
-  }
-
-  .products{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    animation:fadeIn 1s;
-  }
-
-  .card{
-    border:1px solid #333;
-    padding:12px;
-    border-radius:8px;
-    transition:transform 0.3s,box-shadow 0.3s, border-color 0.3s;
-    background:#fff;
-  }
-  .card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    border-color:#1f7aec;
-  }
-
-  button.action{
-    background:#1f7aec;
-    color:#fff;
-    border:none;
-    padding:8px 12px;
-    border-radius:6px;
-    cursor:pointer;
-    transition:background 0.3s;
-  }
+  .cart-icon{font-size:1.5rem;color:#fff;cursor:pointer;position:relative;margin-left:40px;margin-right:20px;transition:all 0.3s;}
+  .cart-icon:hover{color:#ffd700;}
+  .cart-icon span{position:absolute;top:-6px;right:-6px;background:red;color:#fff;font-size:0.8rem;padding:2px 6px;border-radius:50%;}
+  .container{max-width:900px;margin:100px auto 20px auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 6px 20px rgba(20,20,40,0.06);display:none;}
+  .products{display:grid;grid-template-columns:1fr 1fr;gap:12px;animation:fadeIn 1s;}
+  .card{border:1px solid #333;padding:12px;border-radius:8px;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;background:#fff;}
+  .card:hover{transform:translateY(-5px);box-shadow:0 4px 12px rgba(0,0,0,0.1);border-color:#1f7aec;}
+  button.action{background:#1f7aec;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;transition:background 0.3s;}
   button.action:hover{background:#0056b3;}
-
-  input[type=text],input[type=email],input[type=password]{
-    width:100%;
-    padding:8px;
-    margin-top:6px;
-    margin-bottom:12px;
-    border:1px solid #d7dbe1;
-    border-radius:6px;
-  }
-
-  .currency-selector{
-    position:fixed;
-    top:60px;
-    right:10px;
-    max-width:200px;
-    z-index:1000;
-    background:#fff;
-    padding:6px;
-    border-radius:8px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.15);
-  }
-
-  .auth-form{
-    max-width:400px;
-    margin:120px auto;
-    padding:20px;
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 6px 20px rgba(20,20,40,0.06);
-  }
+  input[type=text],input[type=email],input[type=password]{width:100%;padding:8px;margin-top:6px;margin-bottom:12px;border:1px solid #d7dbe1;border-radius:6px;}
+  .currency-selector{position:fixed;top:60px;right:10px;max-width:200px;z-index:1000;background:#fff;padding:6px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .auth-form{max-width:400px;margin:120px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 6px 20px rgba(20,20,40,0.06);}
   .auth-form h2{text-align:center;margin-bottom:20px;}
   .small{font-size:0.9rem;color:#555;}
-
-  .cart{
-    background:#f0f8ff;
-    padding:12px;
-    border-radius:8px;
-    margin-top:20px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);
-    transition:all 0.3s;
-  }
-
+  .cart{background:#f0f8ff;padding:12px;border-radius:8px;margin-top:20px;box-shadow:0 4px 12px rgba(0,0,0,0.05);transition:all 0.3s;}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
@@ -206,94 +89,104 @@
 </div>
 
 <script>
-  let users = JSON.parse(localStorage.getItem('users') || '[]');
-  let cart = [];
-  let currentCurrency = 'PLN';
-  const rates = { PLN:1, USD:4, EUR:4.5, GBP:5, JPY:0.03 };
-  let isSignup=false;
+let users = JSON.parse(localStorage.getItem('users') || '[]');
+let cart = [];
+let currentCurrency = 'PLN';
+const rates = { PLN:1, USD:4, EUR:4.5, GBP:5, JPY:0.03 };
+let isSignup=false;
 
-  function saveUsers(){ localStorage.setItem('users',JSON.stringify(users)); }
+function saveUsers(){ localStorage.setItem('users',JSON.stringify(users)); }
 
-  function showLogin(){
-    isSignup=false;
-    document.getElementById('authDiv').style.display='block';
-    document.getElementById('authTitle').innerText='Login';
-    document.getElementById('confirmDiv').style.display='none';
-    document.getElementById('authActionBtn').innerText='Login';
-    document.getElementById('authMessage').innerText='';
-  }
+function showLogin(){
+  isSignup=false;
+  document.getElementById('authDiv').style.display='block';
+  document.getElementById('authTitle').innerText='Login';
+  document.getElementById('confirmDiv').style.display='none';
+  document.getElementById('authActionBtn').innerText='Login';
+  document.getElementById('authMessage').innerText='';
+}
 
-  function showSignup(){
-    isSignup=true;
-    document.getElementById('authDiv').style.display='block';
-    document.getElementById('authTitle').innerText='Sign Up';
-    document.getElementById('confirmDiv').style.display='block';
-    document.getElementById('authActionBtn').innerText='Sign Up';
-    document.getElementById('authMessage').innerText='';
-  }
+function showSignup(){
+  isSignup=true;
+  document.getElementById('authDiv').style.display='block';
+  document.getElementById('authTitle').innerText='Sign Up';
+  document.getElementById('confirmDiv').style.display='block';
+  document.getElementById('authActionBtn').innerText='Sign Up';
+  document.getElementById('authMessage').innerText='';
+}
 
-  function authAction(){
-    const email=document.getElementById('email').value;
-    const password=document.getElementById('password').value;
-    if(isSignup){
-      const confirmPassword=document.getElementById('confirmPassword').value;
-      if(password!==confirmPassword){ document.getElementById('authMessage').innerText='Passwords do not match'; return; }
-      if(users.find(u=>u.email===email)){ document.getElementById('authMessage').innerText='Email already exists'; return; }
-      users.push({email,password});
-      saveUsers();
-      document.getElementById('authMessage').style.color='green';
-      document.getElementById('authMessage').innerText='Signup successful! You can login now';
-      showLogin();
+function authAction(){
+  const email=document.getElementById('email').value;
+  const password=document.getElementById('password').value;
+  if(isSignup){
+    const confirmPassword=document.getElementById('confirmPassword').value;
+    if(password!==confirmPassword){ document.getElementById('authMessage').innerText='Passwords do not match'; return; }
+    if(users.find(u=>u.email===email)){ document.getElementById('authMessage').innerText='Email already exists'; return; }
+    users.push({email,password});
+    saveUsers();
+    document.getElementById('authMessage').style.color='green';
+    document.getElementById('authMessage').innerText='Signup successful! You can login now';
+    showLogin();
+  } else {
+    const user=users.find(u=>u.email===email && u.password===password);
+    if(user){
+      document.getElementById('authDiv').style.display='none';
+      document.getElementById('shopDiv').style.display='block';
+      updatePrices();
+      renderCart();
     } else {
-      const user=users.find(u=>u.email===email && u.password===password);
-      if(user){
-        document.getElementById('authDiv').style.display='none';
-        document.getElementById('shopDiv').style.display='block';
-        updatePrices();
-        updateCartCount();
-      } else {
-        document.getElementById('authMessage').style.color='red';
-        document.getElementById('authMessage').innerText='Invalid email or password';
-      }
+      document.getElementById('authMessage').style.color='red';
+      document.getElementById('authMessage').innerText='Invalid email or password';
     }
   }
+}
 
-  function changeCurrency(){ currentCurrency=document.getElementById('currency').value; updatePrices(); renderCart(); }
+function changeCurrency(){ 
+  currentCurrency=document.getElementById('currency').value; 
+  updatePrices(); 
+  renderCart(); 
+}
 
-  function updatePrices(){
-    document.querySelectorAll('.card').forEach(card=>{
-      const net=parseFloat(card.dataset.net);
-      const vat=parseFloat(card.dataset.vat);
-      const gross=net*(1+vat/100);
-      const converted=(gross/rates[currentCurrency]).toFixed(2);
-      card.querySelector('.price').textContent=`${converted} ${currentCurrency}`;
-    });
-  }
+function updatePrices(){
+  document.querySelectorAll('.card').forEach(card=>{
+    const net=parseFloat(card.dataset.net);
+    const vat=parseFloat(card.dataset.vat);
+    const gross=net*(1+vat/100);
+    const converted=(gross/rates[currentCurrency]).toFixed(2);
+    card.querySelector('.price').textContent=`${converted} ${currentCurrency}`;
+  });
+}
 
-  function addToCart(name,netPrice,vatPercent){
-    cart.push({name, netPrice, vatPercent, qty:1});
-    renderCart();
-    updateCartCount();
-  }
+function addToCart(name,netPrice,vatPercent){
+  const existing = cart.find(item=>item.name===name);
+  if(existing){ existing.qty += 1; }
+  else{ cart.push({name, netPrice, vatPercent, qty:1}); }
+  renderCart();
+  updateCartCount();
+}
 
-  function renderCart(){
-    const el=document.getElementById('cartItems');
-    if(cart.length===0){ el.innerText='(empty)'; document.getElementById('totals').innerText=''; return; }
-    el.innerHTML='<ul>'+cart.map((it,idx)=>`<li>${it.name} — ${(it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]).toFixed(2)} ${currentCurrency} <button onclick="removeItem(${idx})">Remove</button></li>`).join('')+'</ul>';
-    let gross=0; cart.forEach(it=>{ gross+=it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty; });
-    document.getElementById('totals').innerText=`Total: ${gross.toFixed(2)} ${currentCurrency}`;
-  }
+function removeItem(i){ 
+  cart.splice(i,1); 
+  renderCart(); 
+  updateCartCount(); 
+}
 
-  function removeItem(i){ cart.splice(i,1); renderCart(); updateCartCount(); }
+function renderCart(){
+  const el=document.getElementById('cartItems');
+  if(cart.length===0){ el.innerText='(empty)'; document.getElementById('totals').innerText=''; return; }
+  el.innerHTML='<ul>'+cart.map((it,idx)=>`<li>${it.name} — ${(it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty).toFixed(2)} ${currentCurrency} x${it.qty} <button onclick="removeItem(${idx})">Remove</button></li>`).join('')+'</ul>';
+  let gross=0; cart.forEach(it=>{ gross+=it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty; });
+  document.getElementById('totals').innerText=`Total: ${gross.toFixed(2)} ${currentCurrency}`;
+}
 
-  function toggleCart(){
-    const div=document.getElementById('cartDiv');
-    div.style.display=(div.style.display==='none')?'block':'none';
-  }
+function toggleCart(){
+  const div=document.getElementById('cartDiv');
+  div.style.display=(div.style.display==='none' || div.style.display==='')?'block':'none';
+}
 
-  function updateCartCount(){
-    document.getElementById('cartCount').innerText=cart.length;
-  }
+function updateCartCount(){
+  document.getElementById('cartCount').innerText=cart.reduce((sum,item)=>sum+item.qty,0);
+}
 </script>
 </body>
 </html>
