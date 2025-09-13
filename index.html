@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SlamoShop — Demo</title>
 <style>
   body{
     font-family:Inter,system-ui,Segoe UI,Arial;
@@ -5,6 +11,7 @@
     padding:0;
     color:#111;
 
+    /* Tło strony */
     background-image: url('https://static.wikia.nocookie.net/ea6ca398-8d36-437e-9535-e6bb84a24e0e/scale-to-width/755');
     background-size: cover;
     background-position: center;
@@ -14,7 +21,7 @@
   header{
     width:100%;
     padding:10px 20px;
-    background: rgba(31,122,236,1); /* niebieski pasek z lekką przezroczystością */
+    background:#1f7aec;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -26,7 +33,7 @@
 
   .auth-buttons button{
     padding:6px 12px;
-    background: rgba(255,255,255,1); /* białe przyciski z lekką przezroczystością */
+    background:#fff;
     color:#1f7aec;
     border:none;
     border-radius:6px;
@@ -34,7 +41,7 @@
     margin-right:5px;
     transition:background 0.3s;
   }
-  .auth-buttons button:hover{background: rgba(224,224,224,1);}
+  .auth-buttons button:hover{background:#e0e0e0;}
 
   .cart-icon{
     font-size:1.5rem;
@@ -60,14 +67,11 @@
   .container{
     max-width:900px;
     margin:100px auto 20px auto;
-    background: rgba(0,0,0,0.5); /* przezroczyste białe tło kontenera z produktami */
-    color: white;
+    background:#fff;
     padding:20px;
     border-radius:10px;
     box-shadow:0 6px 20px rgba(20,20,40,0.06);
-    display: none !important;
-    position: relative;
-    z-index: 1000;
+    display:none;
   }
 
   .products{
@@ -82,8 +86,7 @@
     padding:12px;
     border-radius:8px;
     transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
-    background: rgba(0,0,0,0.5); /* lekko przezroczyste karty */
-    color: white;
+    background:#fff;
   }
   .card:hover{
     transform:translateY(-5px);
@@ -109,7 +112,6 @@
     margin-bottom:12px;
     border:1px solid #d7dbe1;
     border-radius:6px;
-    background: white;
   }
 
   .currency-selector{
@@ -118,27 +120,25 @@
     right:10px;
     max-width:200px;
     z-index:1000;
-    background: rgba(0,0,0,0.5); /* przezroczysty selector walut */
-    color: white;
+    background:#fff;
     padding:6px;
     border-radius:8px;
     box-shadow:0 2px 8px rgba(0,0,0,0.15);
-    position: relative;
   }
 
   .auth-form{
     max-width:400px;
     margin:120px auto;
     padding:20px;
-    background: rgba(255,255,255,0.9); /* przezroczysty formularz logowania */
-    color: black;
+    background:#fff;
     border-radius:10px;
     box-shadow:0 6px 20px rgba(20,20,40,0.06);
+  }
   .auth-form h2{text-align:center;margin-bottom:20px;}
-  .small{font-size:0.9rem;color:#aaa;}
+  .small{font-size:0.9rem;color:#555;}
 
   .cart{
-    background: rgba(240,248,255,1); /* przezroczysty koszyk */
+    background:#f0f8ff;
     padding:12px;
     border-radius:8px;
     margin-top:20px;
@@ -148,3 +148,167 @@
 
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
+</head>
+<body>
+
+<header>
+  <div class="auth-buttons">
+    <button id="loginBtn" onclick="showLogin()">Login</button>
+    <button id="signupBtn" onclick="showSignup()">Sign Up</button>
+  </div>
+  <div class="cart-icon" onclick="toggleCart()">🛒<span id="cartCount">0</span></div>
+</header>
+
+<div class="currency-selector">
+  <select id="currency" onchange="changeCurrency()" style="width:100%">
+    <option value="PLN">PLN - Polish Zloty</option>
+    <option value="USD">USD - US Dollar</option>
+    <option value="EUR">EUR - Euro</option>
+    <option value="GBP">GBP - British Pound</option>
+    <option value="JPY">JPY - Japanese Yen</option>
+  </select>
+</div>
+
+<div class="auth-form" id="authDiv">
+  <h2 id="authTitle">Login</h2>
+  <label>Email</label>
+  <input id="email" type="email" placeholder="Enter email">
+  <label>Password</label>
+  <input id="password" type="password" placeholder="Enter password">
+  <div id="confirmDiv" style="display:none">
+    <label>Confirm Password</label>
+    <input id="confirmPassword" type="password" placeholder="Confirm password">
+  </div>
+  <button class="action" id="authActionBtn" onclick="authAction()">Login</button>
+  <p id="authMessage" class="small" style="color:red;text-align:center"></p>
+</div>
+
+<div class="container" id="shopDiv">
+  <h1>SlamoShop — Demo</h1>
+  <p class="small">Welcome! Select products below.</p>
+  <div class="products">
+    <div class="card" data-net="50" data-vat="23">
+      <h3>Classic Slamo</h3>
+      <p class="small">Price: <span class="price">50.00 PLN</span></p>
+      <button class="action" onclick="addToCart('Classic Slamo',50,23)">Add to Cart</button>
+    </div>
+    <div class="card" data-net="50" data-vat="23">
+      <h3>Cardboard Slamo</h3>
+      <p class="small">Price: <span class="price">50.00 PLN</span></p>
+      <button class="action" onclick="addToCart('Cardboard Slamo',50,23)">Add to Cart</button>
+    </div>
+    <div class="card" data-net="50" data-vat="23">
+      <h3>Prism Slamo</h3>
+      <p class="small">Price: <span class="price">50.00 PLN</span></p>
+      <button class="action" onclick="addToCart('Prism Slamo',50,23)">Add to Cart</button>
+    </div>
+  </div>
+  <div class="cart" id="cartDiv" style="display:none">
+    <h2>Cart</h2>
+    <div id="cartItems">(empty)</div>
+    <p id="totals" class="small"></p>
+  </div>
+</div>
+
+<script>
+let users = JSON.parse(localStorage.getItem('users') || '[]');
+let cart = [];
+let currentCurrency = 'PLN';
+const rates = { PLN:1, USD:4, EUR:4.5, GBP:5, JPY:0.03 };
+let isSignup=false;
+
+function saveUsers(){ localStorage.setItem('users',JSON.stringify(users)); }
+
+function showLogin(){
+  isSignup=false;
+  document.getElementById('authDiv').style.display='block';
+  document.getElementById('authTitle').innerText='Login';
+  document.getElementById('confirmDiv').style.display='none';
+  document.getElementById('authActionBtn').innerText='Login';
+  document.getElementById('authMessage').innerText='';
+}
+
+function showSignup(){
+  isSignup=true;
+  document.getElementById('authDiv').style.display='block';
+  document.getElementById('authTitle').innerText='Sign Up';
+  document.getElementById('confirmDiv').style.display='block';
+  document.getElementById('authActionBtn').innerText='Sign Up';
+  document.getElementById('authMessage').innerText='';
+}
+
+function authAction(){
+  const email=document.getElementById('email').value;
+  const password=document.getElementById('password').value;
+  if(isSignup){
+    const confirmPassword=document.getElementById('confirmPassword').value;
+    if(password!==confirmPassword){ document.getElementById('authMessage').innerText='Passwords do not match'; return; }
+    if(users.find(u=>u.email===email)){ document.getElementById('authMessage').innerText='Email already exists'; return; }
+    users.push({email,password});
+    saveUsers();
+    document.getElementById('authMessage').style.color='green';
+    document.getElementById('authMessage').innerText='Signup successful! You can login now';
+    showLogin();
+  } else {
+    const user=users.find(u=>u.email===email && u.password===password);
+    if(user){
+      document.getElementById('authDiv').style.display='none';
+      document.getElementById('shopDiv').style.display='block';
+      updatePrices();
+      renderCart();
+    } else {
+      document.getElementById('authMessage').style.color='red';
+      document.getElementById('authMessage').innerText='Invalid email or password';
+    }
+  }
+}
+
+function changeCurrency(){ 
+  currentCurrency=document.getElementById('currency').value; 
+  updatePrices(); 
+  renderCart(); 
+}
+
+function updatePrices(){
+  document.querySelectorAll('.card').forEach(card=>{
+    const net=parseFloat(card.dataset.net);
+    const vat=parseFloat(card.dataset.vat);
+    const gross=net*(1+vat/100);
+    const converted=(gross/rates[currentCurrency]).toFixed(2);
+    card.querySelector('.price').textContent=`${converted} ${currentCurrency}`;
+  });
+}
+
+function addToCart(name,netPrice,vatPercent){
+  const existing = cart.find(item=>item.name===name);
+  if(existing){ existing.qty += 1; }
+  else{ cart.push({name, netPrice, vatPercent, qty:1}); }
+  renderCart();
+  updateCartCount();
+}
+
+function removeItem(i){ 
+  cart.splice(i,1); 
+  renderCart(); 
+  updateCartCount(); 
+}
+
+function renderCart(){
+  const el=document.getElementById('cartItems');
+  if(cart.length===0){ el.innerText='(empty)'; document.getElementById('totals').innerText=''; return; }
+  el.innerHTML='<ul>'+cart.map((it,idx)=>`<li>${it.name} — ${(it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty).toFixed(2)} ${currentCurrency} x${it.qty} <button onclick="removeItem(${idx})">Remove</button></li>`).join('')+'</ul>';
+  let gross=0; cart.forEach(it=>{ gross+=it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty; });
+  document.getElementById('totals').innerText=`Total: ${gross.toFixed(2)} ${currentCurrency}`;
+}
+
+function toggleCart(){
+  const div=document.getElementById('cartDiv');
+  div.style.display=(div.style.display==='none' || div.style.display==='')?'block':'none';
+}
+
+function updateCartCount(){
+  document.getElementById('cartCount').innerText=cart.reduce((sum,item)=>sum+item.qty,0);
+}
+</script>
+</body>
+</html>
