@@ -1,319 +1,407 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SlamoShop — Demo</title>
-<style>
-  body{
-    font-family:Inter,system-ui,Segoe UI,Arial;
-    margin:0;
-    padding:0;
-    color:#111;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlamoShop — Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            /* Usunięto tło obrazkowe */
+        }
 
-    background-image: url('https://static.wikia.nocookie.net/ea6ca398-8d36-437e-9535-e6bb84a24e0e/scale-to-width/755');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
 
-  header{
-    width:100%;
-    padding:10px 20px;
-    background:rgba(31,122,236,0.9); /* lekka przezroczystość */
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:fixed;
-    top:0; left:0;
-    z-index:1000;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  }
+        .card {
+            transition: all 0.3s ease;
+            border: 1px solid #334155;
+            background-color: #1e293b;
+        }
 
-  .auth-buttons button{
-    padding:6px 12px;
-    background:#fff;
-    color:#1f7aec;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    margin-right:5px;
-    transition:background 0.3s;
-  }
-  .auth-buttons button:hover{background:#e0e0e0;}
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.2);
+            border-color: #0ea5e9;
+        }
 
-  .cart-icon{
-    font-size:1.5rem;
-    color:#fff;
-    cursor:pointer;
-    position:relative;
-    margin-left:40px;
-    margin-right:20px;
-    transition:all 0.3s;
-  }
-  .cart-icon:hover{color:#ffd700;}
-  .cart-icon span{
-    position:absolute;
-    top:-6px;
-    right:-6px;
-    background:red;
-    color:#fff;
-    font-size:0.8rem;
-    padding:2px 6px;
-    border-radius:50%;
-  }
+        .btn-primary {
+            transition: all 0.2s ease;
+            background-color: #0ea5e9;
+        }
 
-  .container{
-    max-width:900px;
-    margin:100px auto 20px auto;
-    background:rgba(255,255,255,0.9); /* półprzezroczyste białe tło */
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 6px 20px rgba(20,20,40,0.06);
-    display:none;
-  }
+        .btn-primary:hover {
+            background-color: #0284c7;
+        }
 
-  .products{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    animation:fadeIn 1s;
-  }
+        .cart-badge {
+            font-size: 0.65rem;
+            top: -0.5rem;
+            right: -0.5rem;
+        }
 
-  .card{
-    border:1px solid #333;
-    padding:12px;
-    border-radius:8px;
-    transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
-    background:#fff;
-  }
-  .card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    border-color:#1f7aec;
-  }
+        .auth-container {
+            backdrop-filter: blur(8px);
+            background-color: rgba(30, 41, 59, 0.9);
+            border: 1px solid #334155;
+        }
 
-  button.action{
-    background:#1f7aec;
-    color:#fff;
-    border:none;
-    padding:8px 12px;
-    border-radius:6px;
-    cursor:pointer;
-    transition:background 0.3s;
-  }
-  button.action:hover{background:#0056b3;}
+        .shop-container {
+            backdrop-filter: blur(8px);
+            background-color: rgba(30, 41, 59, 0.95);
+            border: 1px solid #334155;
+        }
 
-  input[type=text],input[type=email],input[type=password]{
-    width:100%;
-    padding:8px;
-    margin-top:6px;
-    margin-bottom:12px;
-    border:1px solid #d7dbe1;
-    border-radius:6px;
-  }
+        input {
+            background-color: #1e293b;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
 
-  .currency-selector{
-    position:fixed;
-    top:60px;
-    right:10px;
-    max-width:200px;
-    z-index:1000;
-    background:#fff;
-    padding:6px;
-    border-radius:8px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.15);
-  }
+        input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #0ea5e9;
+            border-color: #0ea5e9;
+        }
 
-  .auth-form{
-    max-width:400px;
-    margin:120px auto;
-    padding:20px;
-    background:rgba(255,255,255,0.9);
-    border-radius:10px;
-    box-shadow:0 6px 20px rgba(20,20,40,0.06);
-  }
-  .auth-form h2{text-align:center;margin-bottom:20px;}
-  .small{font-size:0.9rem;color:#555;}
+        select {
+            background-color: #1e293b;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
 
-  .cart{
-    background:#f0f8ff;
-    padding:12px;
-    border-radius:8px;
-    margin-top:20px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);
-    transition:all 0.3s;
-  }
+        select:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #0ea5e9;
+            border-color: #0ea5e9;
+        }
 
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-</style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Styl dla tekstu opisu strony */
+        .site-description {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #d1d5db; /* Jasny szary tekst */
+            font-size: 2.5rem; /* Zwiększony rozmiar czcionki */
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Lekki cień */
+            line-height: 1.5; /* Odstęp między liniami */
+        }
+
+        .site-description span {
+            color: #38bdf8; /* Kolor dla wyróżnienia */
+            font-weight: 700;
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen">
+    <header class="fixed top-0 left-0 right-0 bg-dark-900 shadow-lg z-50 border-b border-slate-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                    <i data-feather="shopping-bag" class="text-white w-4 h-4"></i>
+                </div>
+                <h1 class="text-xl font-bold text-primary-400">SlamoShop</h1>
+            </div>
+            <div class="flex items-center space-x-6">
+                <button id="loginBtn" onclick="showLogin()" class="text-slate-300 hover:text-primary-400 font-medium transition-colors">Login</button>
+                <button id="signupBtn" onclick="showSignup()" class="text-slate-300 hover:text-primary-400 font-medium transition-colors">Sign Up</button>
+                <div class="relative cursor-pointer group" onclick="toggleCart()">
+                    <div class="p-2 rounded-full hover:bg-slate-800 transition-colors">
+                        <i data-feather="shopping-cart" class="text-slate-300 group-hover:text-primary-400 transition-colors"></i>
+                        <span id="cartCount" class="absolute cart-badge bg-primary-600 text-white rounded-full px-2 py-1 hidden">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<!-- muzyka w tle -->
-<audio autoplay loop>
-  <source src="Eternal.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-
-<header>
-  <div class="auth-buttons">
-    <button id="loginBtn" onclick="showLogin()">Login</button>
-    <button id="signupBtn" onclick="showSignup()">Sign Up</button>
-  </div>
-  <div class="cart-icon" onclick="toggleCart()">🛒<span id="cartCount">0</span></div>
-</header>
-
-<div class="currency-selector">
-  <select id="currency" onchange="changeCurrency()" style="width:100%">
-    <option value="PLN">PLN - Polish Zloty</option>
-    <option value="USD">USD - US Dollar</option>
-    <option value="EUR">EUR - Euro</option>
-    <option value="GBP">GBP - British Pound</option>
-    <option value="JPY">JPY - Japanese Yen</option>
-  </select>
+    <div class="absolute inset-0 flex items-center justify-center">
+    <div class="site-description">
+        Unique, handmade<br>
+        <span>with care</span> Slamo plush toys<br>
+        Created with passion to bring happiness!
+    </div>
 </div>
 
-<div class="auth-form" id="authDiv">
-  <h2 id="authTitle">Login</h2>
-  <label>Email</label>
-  <input id="email" type="email" placeholder="Enter email">
-  <label>Password</label>
-  <input id="password" type="password" placeholder="Enter password">
-  <div id="confirmDiv" style="display:none">
-    <label>Confirm Password</label>
-    <input id="confirmPassword" type="password" placeholder="Confirm password">
-  </div>
-  <button class="action" id="authActionBtn" onclick="authAction()">Login</button>
-  <p id="authMessage" class="small" style="color:red;text-align:center"></p>
-</div>
 
-<div class="container" id="shopDiv">
-  <h1>SlamoShop — Demo</h1>
-  <p class="small">Welcome! Select products below.</p>
-  <div class="products">
-    <div class="card" data-net="50" data-vat="23">
-      <h3>Classic Slamo</h3>
-      <p class="small">Price: <span class="price">50.00 PLN</span></p>
-      <button class="action" onclick="addToCart('Classic Slamo',50,23)">Add to Cart</button>
+    <div class="fixed top-16 right-4 z-50 bg-dark-800 rounded-md shadow-lg border border-slate-700 p-2" data-aos="fade-left">
+        <select id="currency" onchange="changeCurrency()" class="px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <option value="PLN">PLN - Polish Zloty</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+        </select>
     </div>
-    <div class="card" data-net="50" data-vat="23">
-      <h3>Cardboard Slamo</h3>
-      <p class="small">Price: <span class="price">50.00 PLN</span></p>
-      <button class="action" onclick="addToCart('Cardboard Slamo',50,23)">Add to Cart</button>
+
+    <div id="authDiv" class="auth-container max-w-md mx-auto mt-24 p-8 rounded-xl shadow-xl" style="display: none;" data-aos="fade-up">
+        <div class="flex justify-center mb-6">
+            <div class="w-16 h-16 bg-primary-900 rounded-full flex items-center justify-center">
+                <i data-feather="lock" class="text-primary-400 w-8 h-8"></i>
+            </div>
+        </div>
+        <h2 id="authTitle" class="text-2xl font-bold text-center text-slate-100 mb-6">Login</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Email</label>
+                <input id="email" type="email" placeholder="Enter email" class="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Password</label>
+                <input id="password" type="password" placeholder="Enter password" class="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
+            </div>
+            <div id="confirmDiv" style="display: none;">
+                <label class="block text-sm font-medium text-slate-300 mb-1">Confirm Password</label>
+                <input id="confirmPassword" type="password" placeholder="Confirm password" class="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
+            </div>
+            <button id="authActionBtn" onclick="authAction()" class="w-full btn-primary text-white py-2 px-4 rounded-md hover:bg-primary-700 transition-colors font-medium">Login</button>
+            <p id="authMessage" class="text-sm text-center mt-2"></p>
+        </div>
     </div>
-    <div class="card" data-net="50" data-vat="23">
-      <h3>Prism Slamo</h3>
-      <p class="small">Price: <span class="price">50.00 PLN</span></p>
-      <button class="action" onclick="addToCart('Prism Slamo',50,23)">Add to Cart</button>
+
+    <div id="shopDiv" class="container mx-auto px-4 py-8 mt-24 shop-container rounded-xl shadow-xl max-w-6xl" style="display: none;" data-aos="fade-up">
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-primary-400 mb-2">SlamoShop — Premium</h1>
+            <p class="text-slate-400">Welcome to our exclusive collection</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card p-6 rounded-lg" data-net="50" data-vat="23">
+                <div class="h-40 bg-gradient-to-br from-primary-900 to-primary-700 rounded-lg mb-4 flex items-center justify-center">
+                    <i data-feather="box" class="w-12 h-12 text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-slate-100">Classic Slamo</h3>
+                <p class="text-slate-400 mb-4">Price: <span class="price font-medium text-primary-400">50.00 PLN</span></p>
+                <button onclick="addToCart('Classic Slamo',50,23)" class="btn-primary text-white py-2 px-4 rounded-md hover:bg-primary-700 w-full transition-colors">Add to Cart</button>
+            </div>
+            <div class="card p-6 rounded-lg" data-net="50" data-vat="23">
+                <div class="h-40 bg-gradient-to-br from-amber-900 to-amber-700 rounded-lg mb-4 flex items-center justify-center">
+                    <i data-feather="package" class="w-12 h-12 text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-slate-100">Cardboard Slamo</h3>
+                <p class="text-slate-400 mb-4">Price: <span class="price font-medium text-primary-400">50.00 PLN</span></p>
+                <button onclick="addToCart('Cardboard Slamo',50,23)" class="btn-primary text-white py-2 px-4 rounded-md hover:bg-primary-700 w-full transition-colors">Add to Cart</button>
+            </div>
+            <div class="card p-6 rounded-lg" data-net="50" data-vat="23">
+                <div class="h-40 bg-gradient-to-br from-purple-900 to-purple-700 rounded-lg mb-4 flex items-center justify-center">
+                    <i data-feather="diamond" class="w-12 h-12 text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-slate-100">Prism Slamo</h3>
+                <p class="text-slate-400 mb-4">Price: <span class="price font-medium text-primary-400">50.00 PLN</span></p>
+                <button onclick="addToCart('Prism Slamo',50,23)" class="btn-primary text-white py-2 px-4 rounded-md hover:bg-primary-700 w-full transition-colors">Add to Cart</button>
+            </div>
+        </div>
+
+        <div id="cartDiv" class="mt-12 bg-dark-800 p-6 rounded-lg border border-slate-700" style="display: none;" data-aos="fade-up">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-semibold text-slate-100">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-slate-400 hover:text-primary-400 transition-colors">
+                    <i data-feather="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="cartItems" class="mb-4 text-slate-300">(empty)</div>
+            <div class="border-t border-slate-700 pt-4">
+                <p id="totals" class="text-lg font-medium text-primary-400"></p>
+                <button class="w-full mt-4 bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-md transition-colors font-medium">Proceed to Checkout</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="cart" id="cartDiv" style="display:none">
-    <h2>Cart</h2>
-    <div id="cartItems">(empty)</div>
-    <p id="totals" class="small"></p>
-  </div>
-</div>
 
-<script>
-let users = JSON.parse(localStorage.getItem('users') || '[]');
-let cart = [];
-let currentCurrency = 'PLN';
-const rates = { PLN:1, USD:4, EUR:4.5, GBP:5, JPY:0.03 };
-let isSignup=false;
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
 
-function saveUsers(){ localStorage.setItem('users',JSON.stringify(users)); }
+        let users = JSON.parse(localStorage.getItem('users') || '[]');
+        let cart = [];
+        let currentCurrency = 'PLN';
+        const rates = { PLN:1, USD:4, EUR:4.5, GBP:5, JPY:0.03 };
+        let isSignup=false;
 
-function showLogin(){
-  isSignup=false;
-  document.getElementById('authDiv').style.display='block';
-  document.getElementById('authTitle').innerText='Login';
-  document.getElementById('confirmDiv').style.display='none';
-  document.getElementById('authActionBtn').innerText='Login';
-  document.getElementById('authMessage').innerText='';
-}
+        function saveUsers(){ localStorage.setItem('users',JSON.stringify(users)); }
 
-function showSignup(){
-  isSignup=true;
-  document.getElementById('authDiv').style.display='block';
-  document.getElementById('authTitle').innerText='Sign Up';
-  document.getElementById('confirmDiv').style.display='block';
-  document.getElementById('authActionBtn').innerText='Sign Up';
-  document.getElementById('authMessage').innerText='';
-}
+        function showLogin(){
+            isSignup=false;
+            document.getElementById('authDiv').style.display='block';
+            document.getElementById('authTitle').innerText='Login';
+            document.getElementById('confirmDiv').style.display='none';
+            document.getElementById('authActionBtn').innerText='Login';
+            document.getElementById('authMessage').innerText='';
+            document.getElementById('shopDiv').style.display='none';
+        }
 
-function authAction(){
-  const email=document.getElementById('email').value;
-  const password=document.getElementById('password').value;
-  if(isSignup){
-    const confirmPassword=document.getElementById('confirmPassword').value;
-    if(password!==confirmPassword){ document.getElementById('authMessage').innerText='Passwords do not match'; return; }
-    if(users.find(u=>u.email===email)){ document.getElementById('authMessage').innerText='Email already exists'; return; }
-    users.push({email,password});
-    saveUsers();
-    document.getElementById('authMessage').style.color='green';
-    document.getElementById('authMessage').innerText='Signup successful! You can login now';
-    showLogin();
-  } else {
-    const user=users.find(u=>u.email===email && u.password===password);
-    if(user){
-      document.getElementById('authDiv').style.display='none';
-      document.getElementById('shopDiv').style.display='block';
-      updatePrices();
-      renderCart();
-    } else {
-      document.getElementById('authMessage').style.color='red';
-      document.getElementById('authMessage').innerText='Invalid email or password';
-    }
-  }
-}
+        function showSignup(){
+            isSignup=true;
+            document.getElementById('authDiv').style.display='block';
+            document.getElementById('authTitle').innerText='Sign Up';
+            document.getElementById('confirmDiv').style.display='block';
+            document.getElementById('authActionBtn').innerText='Sign Up';
+            document.getElementById('authMessage').innerText='';
+            document.getElementById('shopDiv').style.display='none';
+        }
 
-function changeCurrency(){ 
-  currentCurrency=document.getElementById('currency').value; 
-  updatePrices(); 
-  renderCart(); 
-}
+        function authAction(){
+            const email=document.getElementById('email').value;
+            const password=document.getElementById('password').value;
+            if(isSignup){
+                const confirmPassword=document.getElementById('confirmPassword').value;
+                if(password!==confirmPassword){ 
+                    document.getElementById('authMessage').style.color='#ef4444';
+                    document.getElementById('authMessage').innerText='Passwords do not match'; 
+                    return; 
+                }
+                if(users.find(u=>u.email===email)){ 
+                    document.getElementById('authMessage').style.color='#ef4444';
+                    document.getElementById('authMessage').innerText='Email already exists'; 
+                    return; 
+                }
+                users.push({email,password});
+                saveUsers();
+                document.getElementById('authMessage').style.color='#10b981';
+                document.getElementById('authMessage').innerText='Signup successful! You can login now';
+                showLogin();
+            } else {
+                const user=users.find(u=>u.email===email && u.password===password);
+                if(user){
+                    document.getElementById('authDiv').style.display='none';
+                    document.getElementById('shopDiv').style.display='block';
+                    updatePrices();
+                    renderCart();
+                } else {
+                    document.getElementById('authMessage').style.color='#ef4444';
+                    document.getElementById('authMessage').innerText='Invalid email or password';
+                }
+            }
+        }
 
-function updatePrices(){
-  document.querySelectorAll('.card').forEach(card=>{
-    const net=parseFloat(card.dataset.net);
-    const vat=parseFloat(card.dataset.vat);
-    const gross=net*(1+vat/100);
-    const converted=(gross/rates[currentCurrency]).toFixed(2);
-    card.querySelector('.price').textContent=`${converted} ${currentCurrency}`;
-  });
-}
+        function changeCurrency(){ 
+            currentCurrency=document.getElementById('currency').value; 
+            updatePrices(); 
+            renderCart(); 
+        }
 
-function addToCart(name,netPrice,vatPercent){
-  const existing = cart.find(item=>item.name===name);
-  if(existing){ existing.qty += 1; }
-  else{ cart.push({name, netPrice, vatPercent, qty:1}); }
-  renderCart();
-  updateCartCount();
-}
+        function updatePrices(){
+            document.querySelectorAll('.card').forEach(card=>{
+                const net=parseFloat(card.dataset.net);
+                const vat=parseFloat(card.dataset.vat);
+                const gross=net*(1+vat/100);
+                const converted=(gross/rates[currentCurrency]).toFixed(2);
+                card.querySelector('.price').textContent=`${converted} ${currentCurrency}`;
+            });
+        }
 
-function removeItem(i){ 
-  cart.splice(i,1); 
-  renderCart(); 
-  updateCartCount(); 
-}
+        function addToCart(name,netPrice,vatPercent){
+            const existing = cart.find(item=>item.name===name);
+            if(existing){ existing.qty += 1; }
+            else{ cart.push({name, netPrice, vatPercent, qty:1}); }
+            renderCart();
+            updateCartCount();
+            AOS.refresh();
+        }
 
-function renderCart(){
-  const el=document.getElementById('cartItems');
-  if(cart.length===0){ el.innerText='(empty)'; document.getElementById('totals').innerText=''; return; }
-  el.innerHTML='<ul>'+cart.map((it,idx)=>`<li>${it.name} — ${(it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty).toFixed(2)} ${currentCurrency} x${it.qty} <button onclick="removeItem(${idx})">Remove</button></li>`).join('')+'</ul>';
-  let gross=0; cart.forEach(it=>{ gross+=it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty; });
-  document.getElementById('totals').innerText=`Total: ${gross.toFixed(2)} ${currentCurrency}`;
-}
+        function removeItem(i){ 
+            cart.splice(i,1); 
+            renderCart(); 
+            updateCartCount(); 
+            AOS.refresh();
+        }
 
-function toggleCart(){
-  const div=document.getElementById('cartDiv');
-  div.style.display=(div.style.display==='none' || div.style.display==='')?'block':'none';
-}
+        function renderCart(){
+            const el=document.getElementById('cartItems');
+            if(cart.length===0){ 
+                el.innerHTML='<div class="text-center py-8"><i data-feather="shopping-cart" class="w-8 h-8 mx-auto text-slate-500 mb-2"></i><p class="text-slate-500">Your cart is empty</p></div>'; 
+                document.getElementById('totals').innerText=''; 
+                return; 
+            }
+            el.innerHTML='<ul class="space-y-3">'+cart.map((it,idx)=>`
+                <li class="flex justify-between items-center py-2 border-b border-slate-700 last:border-0">
+                    <span class="text-slate-300">${it.name} — <span class="text-primary-400">${(it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty).toFixed(2)} ${currentCurrency}</span> x${it.qty}</span>
+                    <button onclick="removeItem(${idx})" class="text-slate-400 hover:text-red-400 transition-colors">
+                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </li>`).join('')+'</ul>';
+            let gross=0; cart.forEach(it=>{ gross+=it.netPrice*(1+it.vatPercent/100)/rates[currentCurrency]*it.qty; });
+            document.getElementById('totals').innerText=`Total: ${gross.toFixed(2)} ${currentCurrency}`;
+            feather.replace();
+        }
 
-function updateCartCount(){
-  document.getElementById('cartCount').innerText=cart.reduce((sum,item)=>sum+item.qty,0);
-}
-</script>
+        function toggleCart(){
+            const div=document.getElementById('cartDiv');
+            div.style.display=(div.style.display==='none' || div.style.display==='')?'block':'none';
+            AOS.refresh();
+        }
+
+        function updateCartCount(){
+            const count = cart.reduce((sum,item)=>sum+item.qty,0);
+            document.getElementById('cartCount').innerText=count;
+            document.getElementById('cartCount').style.display = count > 0 ? 'block' : 'none';
+        }
+
+        feather.replace();
+    </script>
 </body>
 </html>
