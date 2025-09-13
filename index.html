@@ -46,10 +46,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #0f172a;
             color: #e2e8f0;
-            background-image: url('https://static.wikia.nocookie.net/ea6ca398-8d36-437e-9535-e6bb84a24e0e/scale-to-width/755');
-            background-repeat: no-repeat;
-            background-size: cover; /* Dopasuje obraz do całej strony */
-            background-position: center; /* Wyśrodkuje obraz */
+            /* Usunięto tło obrazkowe */
         }
 
         .gradient-bg {
@@ -137,6 +134,25 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #475569;
         }
+
+        /* Styl dla tekstu opisu strony */
+        .site-description {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #d1d5db; /* Jasny szary tekst */
+            font-size: 2.5rem; /* Zwiększony rozmiar czcionki */
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Lekki cień */
+            line-height: 1.5; /* Odstęp między liniami */
+        }
+
+        .site-description span {
+            color: #38bdf8; /* Kolor dla wyróżnienia */
+            font-weight: 700;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -160,6 +176,14 @@
             </div>
         </div>
     </header>
+
+    <div class="absolute inset-0 flex items-center justify-center">
+        <div class="site-description">
+            Unikalne, szyte<br>
+            <span>własnoręcznie</span> pluszaki Slamo<br>
+            Stworzone z pasją, by przynosić radość!
+        </div>
+    </div>
 
     <div class="fixed top-16 right-4 z-50 bg-dark-800 rounded-md shadow-lg border border-slate-700 p-2" data-aos="fade-left">
         <select id="currency" onchange="changeCurrency()" class="px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
