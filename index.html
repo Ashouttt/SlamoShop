@@ -11,7 +11,6 @@
     padding:0;
     color:#111;
 
-    /* Tło strony */
     background-image: url('https://static.wikia.nocookie.net/ea6ca398-8d36-437e-9535-e6bb84a24e0e/scale-to-width/755');
     background-size: cover;
     background-position: center;
@@ -21,7 +20,7 @@
   header{
     width:100%;
     padding:10px 20px;
-    background:#1f7aec;
+    background:rgba(31,122,236,0.9); /* lekka przezroczystość */
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -67,7 +66,7 @@
   .container{
     max-width:900px;
     margin:100px auto 20px auto;
-    background:#fff;
+    background:rgba(255,255,255,0.9); /* półprzezroczyste białe tło */
     padding:20px;
     border-radius:10px;
     box-shadow:0 6px 20px rgba(20,20,40,0.06);
@@ -130,7 +129,7 @@
     max-width:400px;
     margin:120px auto;
     padding:20px;
-    background:#fff;
+    background:rgba(255,255,255,0.9);
     border-radius:10px;
     box-shadow:0 6px 20px rgba(20,20,40,0.06);
   }
@@ -150,6 +149,12 @@
 </style>
 </head>
 <body>
+
+<!-- muzyka w tle -->
+<audio autoplay loop>
+  <source src="Eternal.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 
 <header>
   <div class="auth-buttons">
