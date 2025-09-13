@@ -44,7 +44,7 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-image: url('https://static.wikia.nocookie.net/jtoh-xl-project/images/8/8c/Zone_1.png/revision/latest/scale-to-width-down/1000?cb=20240906214024');
+            background-image: url('https://picsum.photos/1200/800'); /* zamienione na działający publiczny obrazek */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -82,42 +82,22 @@
             right: -0.5rem;
         }
 
-        .auth-container {
-            backdrop-filter: blur(8px);
-            background-color: rgba(30, 41, 59, 0.9);
-            border: 1px solid #334155;
-        }
-
-        .shop-container {
+        .auth-container, .shop-container {
             backdrop-filter: blur(8px);
             background-color: rgba(30, 41, 59, 0.95);
             border: 1px solid #334155;
         }
 
-        input {
+        input, select {
             background-color: #1e293b;
             border-color: #334155;
             color: #e2e8f0;
         }
 
-        input:focus {
+        input:focus, select:focus {
             outline: none;
-            ring: 2px;
-            ring-color: #0ea5e9;
             border-color: #0ea5e9;
-        }
-
-        select {
-            background-color: #1e293b;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-
-        select:focus {
-            outline: none;
-            ring: 2px;
-            ring-color: #0ea5e9;
-            border-color: #0ea5e9;
+            box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.5);
         }
 
         ::-webkit-scrollbar {
@@ -137,22 +117,21 @@
             background: #475569;
         }
 
-        /* Styl dla tekstu opisu strony */
         .site-description {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            color: #d1d5db; /* Jasny szary tekst */
-            font-size: 2.5rem; /* Zwiększony rozmiar czcionki */
+            color: #d1d5db;
+            font-size: 2.5rem;
             font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Lekki cień */
-            line-height: 1.5; /* Odstęp między liniami */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.5;
         }
 
         .site-description span {
-            color: #38bdf8; /* Kolor dla wyróżnienia */
+            color: #38bdf8;
             font-weight: 700;
         }
     </style>
