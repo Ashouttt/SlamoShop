@@ -4,11 +4,44 @@
 <meta charset="UTF-8">
 <title>Quiz liczb po niemiecku</title>
 <style>
-body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-button { padding: 10px 20px; margin: 10px; font-size: 16px; }
-input { padding: 10px; font-size: 16px; width: 200px; }
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+    color: #333;
+}
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    background: #fff;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+button:hover {
+    transform: scale(1.05);
+    background: #f0f0f0;
+}
+input {
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
 #quiz { display: none; margin-top: 20px; }
-#result { margin-top: 10px; font-weight: bold; }
+#result {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
 </style>
 </head>
 <body>
@@ -23,25 +56,28 @@ input { padding: 10px; font-size: 16px; width: 200px; }
 <div id="quiz">
   <p>Podaj liczbę po niemiecku dla: <span id="number"></span></p>
   <input type="text" id="answer" />
-  <button onclick="checkAnswer()">Sprawdź</button>
+  <div>
+      <button onclick="checkAnswer()">Sprawdź</button>
+      <button onclick="exitQuiz()" style="background:#ff6b6b; color:white;">Wyjdź</button>
+  </div>
   <p id="result"></p>
   <button onclick="nextNumber()">Następna liczba</button>
 </div>
 
 <script>
-// Funkcja do tworzenia niemieckich liczebników
 function germanNumber(n) {
-    const units = ["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun"];
-    const teens = ["zehn","elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn"];
-    const tens = ["","","zwanzig","dreißig","vierzig","fünfzig","sechzig","siebzig","achtzig","neunzig"];
+const units = ["null","eins","zwei","drei","vier","funf","sechs","sieben","acht","neun"];
+const teens = ["zehn","elf","zwolf","dreizehn","vierzehn","funfzehn","sechzehn","siebzehn","achtzehn","neunzehn"];
+const tens = ["","","zwanzig","dreissig","vierzig","funfzig","sechzig","siebzig","achtzig","neunzig"];
+
 
     if(n<10) return units[n];
     if(n<20) return teens[n-10];
     if(n<100){
         let z=Math.floor(n/10), e=n%10;
-        if(e===0) return tens[z];
-        if(e===1) return "einund"+tens[z];
-        return units[e]+"und"+tens[z];
+        if(e===0) return tens[z].replace("ß","s").replace("ü","u");
+        if(e===1) return "einund"+tens[z].replace("ß","s").replace("ü","u");
+        return units[e]+"und"+tens[z].replace("ß","s").replace("ü","u");
     }
     if(n<1000){
         let h=Math.floor(n/100), rest=n%100;
@@ -68,19 +104,30 @@ function nextNumber(){
     currentNumber = Math.floor(Math.random()*(maxRange-minRange+1))+minRange;
     document.getElementById('number').textContent = currentNumber;
     document.getElementById('answer').value = '';
-    document.getElementById('result').textContent = '';
+    const resultEl = document.getElementById('result');
+    resultEl.textContent = '';
+    resultEl.style.opacity = 0;
 }
 
 function checkAnswer(){
     let userAnswer = document.getElementById('answer').value.trim().toLowerCase();
     let correctAnswer = germanNumber(currentNumber).toLowerCase();
+
+    const resultEl = document.getElementById('result');
     if(userAnswer === correctAnswer){
-        document.getElementById('result').textContent = '✅ Poprawnie!';
-        document.getElementById('result').style.color='green';
+        resultEl.textContent = '✅ Poprawnie!';
+        resultEl.style.color='green';
     } else {
-        document.getElementById('result').textContent = '❌ Błąd! Poprawna odpowiedź: ' + correctAnswer;
-        document.getElementById('result').style.color='red';
+        resultEl.textContent = '❌ Błąd! Poprawna odpowiedź: ' + correctAnswer;
+        resultEl.style.color='red';
     }
+    resultEl.style.opacity = 0;
+    setTimeout(()=>{ resultEl.style.opacity = 1; }, 10);
+}
+
+function exitQuiz(){
+    document.getElementById('quiz').style.display='none';
+    document.getElementById('lobby').style.display='block';
 }
 </script>
 </body>
